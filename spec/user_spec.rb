@@ -66,4 +66,18 @@ describe User do
     end
   end
 
+  describe "#tag_cloud" do
+    it "corret value" do
+      @user.add_post("A","456","2014-06-05")
+      @user.add_post("A","789","2014-06-05")
+      @user.add_post("A","123","2014-06-05")
+      @user.posts[0].tagme(:electronics,:sports,:school,:Intec,:electronics,:electronics,:electronics)
+      @user.posts[1].tagme(:electronics,:sports,:school,:ruby,:electronics,:electronics)
+      @user.posts[2].tagme(:electronics,:sports,:school,:Intec,:Intec,:Intec,:Intec,:ruby)
+      expect(@user.tag_cloud[:electronics]).to eql(8)
+
+      
+    end
+  end
+
 end

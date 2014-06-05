@@ -22,9 +22,18 @@ class User
 		posts.select{|post| post.title == title}.first
 	end
 
-	def tag_clod
-		tags2 = tags.uniq
-		cant = []
-		tags.each{|x|}
+	def tag_cloud
+		map = Hash.new(0)
+
+		@posts.each do |post|
+			post.tags.each do |tag|
+				map[tag] = map[tag] + 1
+			end
+		end
+		map.sort_by { |tag, value| value }
+
+		map.each{|x| puts "#{x}"}
+		map
+
 	end
 end
