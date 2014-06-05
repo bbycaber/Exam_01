@@ -18,7 +18,10 @@ class Post
 	  end
 	end
 
-	def sumary
+	def summary
+		var = ""
+		@text.split(' ').take(10).each{|x| var = var=var + x + " "}
+		var
 	end
 
 	def tagme
