@@ -15,6 +15,7 @@ describe Post do
 
 
 
+
   describe "#initialize" do
 
     context "with a yaml file" do
@@ -40,6 +41,26 @@ describe Post do
 
     end
 
+  describe "respond to method" do
+      it "should respond to #summary" do
+        user = User.new("Luis")
+        post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+              expect(post).to respond_to(:summary)
+      end
+
+      it "should respond to #tagme" do
+        user = User.new("Luis")
+        post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+              expect(post).to respond_to(:tagme)
+      end
+
+      it "should respond to #same?" do
+        user = User.new("Luis")
+        post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+              expect(post).to respond_to(:same?)
+      end
+   end
+
     context "with proper attributes" do
       it "should properly initialize a post instance" do
         user = User.new("Luis")
@@ -50,12 +71,26 @@ describe Post do
 
   end
   describe "#summary" do
-    it "should display the first 10 words of text"
+    it "should display the first 10 words of text" do
+      user = User.new("Luis")
+      post = Post.new("The best","Im the best for long time A A A A A A", "2014-06-05",user)
+      expect(post.summary).to eql("Im the best for long time A A A A ")
+    end
   end
 
   describe "#tagme" do
-    it "should be able to tag with 1 tag"
-    it "should be able to tag with 4 tags"
+    it "should be able to tag with 1 tag" do
+      user = User.new("Luis")
+      post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+      post.tagme(:electronics)
+      expect(post.tags.size).to eql(1)
+    end
+    it "should be able to tag with 4 tags" do
+      user = User.new("Luis")
+      post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+      post.tagme(:electronics,:sports,:school,:Intec)
+      expect(post.tags.size).to eql(4)
+    end 
   end
 
   describe "#same?" do
@@ -74,11 +109,39 @@ describe Post do
   end
 
   describe "#display_entry" do
-    it "should properly output a post entry"
+    it "should properly output a post entry" do
+      user = User.new("Luis")
+      post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+      post.tagme(:electronics,:sports,:school,:Intec)
+      expect(post.display_entry).to eql("Luis,2014-06-05\nThe best\nIm the best for long time\ntags:electronics,sports,school,Intec,")
+    end
   end
 
   describe "#save" do
-    it "should save the post to a YAML file"
+    it "should save the post to a YAML file" do
+      user = User.new("Luis")
+      post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+      post.save
+      post2 = Post.new("post_save.yml")
+      expect(post2).to be_kind_of(Post)   
+    end
+
+    it "should save the post to a YAML file" do
+      user = User.new("Luis")
+      post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+      post.save
+      post2 = Post.new("post_save.yml")
+      expect(post2.title).to eql("The best")   
+    end
+
+    it "should save the post to a YAML file" do
+      user = User.new("Luis")
+      post = Post.new("The best","Im the best for long time", "2014-06-05",user)
+      post.save
+      post2 = Post.new("post_save.yml")
+      expect(post2.same?("The best","Im the best for long time", "2014-06-05")).to be_true
+    end
+    
   end
 
 end

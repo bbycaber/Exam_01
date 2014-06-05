@@ -34,6 +34,20 @@ class Post
 		@title ==title && @text ==text && @date ==date
 	end
 
+	def display_entry
+		dommy = @user.name + ","+ @date + "\n" + @title + "\n" + @text + "\ntags:"
+		@tags.each{|tag| dommy+= tag.to_s + "," }
+		puts "#{dommy}"
+		dommy
+
+	end
+
+	def save
+		File.open "post_save.yml", 'w' do |f|
+            f.write YAML::dump self
+        end
+	end
+
 	private 
 
 	def load_file file

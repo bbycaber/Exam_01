@@ -20,30 +20,50 @@ describe User do
   end
 
   describe "respond to method" do
-    it "should respond to #name" do
+    it "should respond to #add_post" do
             expect(@user).to respond_to(:add_post)
     end
 
-    it "should respond to #name" do
+    it "should respond to #add_post" do
             expect(@user).to respond_to(:list)
     end
 
-    it "should respond to #name" do
+    it "should respond to #find_post_by_title" do
             expect(@user).to respond_to(:find_post_by_title)
     end
    end
 
   describe "#add_post" do
-    it "should add a post to the posts list"
+    it "should add a post to the posts list" do
+      @user.add_post("A","ABCD","2014-06-05")
+      expect(@user.posts.size).to eql(1)
+    end
+
   end
 
   describe "#list" do
-    it "should properly ouput all posts"
+    it "should properly ouput all posts" do
+      @user.add_post("A","123","2014-06-05")
+      @user.add_post("B","456","2014-06-05")
+      @user.add_post("C","789","2014-06-05")
+      expect(@user.list[0]).to eql("Luis,2014-06-05\nA\n123\ntags:")
+      expect(@user.list[1]).to eql("Luis,2014-06-05\nB\n456\ntags:")
+      expect(@user.list[2]).to eql("Luis,2014-06-05\nC\n789\ntags:")
+    end
   end
 
   describe "#find_post_by_title" do
-    it "should return a post by title"
-    it "should return the first one if there are several with the same name"
+    it "should return a post by title" do
+      @user.add_post("A","123","2014-06-05")
+      expect(@user.find_post_by_title("A").text).to eql("123")
+    end
+    it "should return the first one if there are several with the same name" do
+       @user.add_post("A","456","2014-06-05")
+       @user.add_post("A","789","2014-06-05")
+       @user.add_post("A","123","2014-06-05")
+       expect(@user.find_post_by_title("A").text).to eql("456")
+
+    end
   end
 
 end
