@@ -1,6 +1,6 @@
 class Post
 
-	attr_reader :title,:text, :date,:user
+	attr_reader :title,:text, :date,:user, :tags
 
 	def initialize *params
 	  if(params.size ==4)
@@ -8,12 +8,14 @@ class Post
 		@text = params[1]
 		@date = params[2]
 		@user = params[3]
+		@tags = []
 	 else
 	 	post = load_file(params[0])
 	 	@title = post.title
 		@text = post.text
 		@date = post.date
 		@user = post.user
+		@tags = post.tags
 	
 	  end
 	end
@@ -24,7 +26,8 @@ class Post
 		var
 	end
 
-	def tagme
+	def tagme *params
+		params.each{|x| tags << x}
 	end
 
 	def same? tile,text,date
