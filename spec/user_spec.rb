@@ -41,6 +41,16 @@ describe User do
 
   end
 
+  describe "#all_posts" do
+    it "should add a post to the posts list" do
+      @user.add_post("A","ABCD","2014-06-05")
+      @user.add_post("B","ABCD","2014-06-05")
+      @user.add_post("C","ABCD","2014-06-05")
+      expect(@user.all_posts[0].title).to eql("C")
+    end
+  end
+  
+
   describe "#list" do
     it "should properly ouput all posts" do
       @user.add_post("A","123","2014-06-05")

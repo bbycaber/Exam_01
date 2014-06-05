@@ -43,7 +43,8 @@ class Post
 	end
 
 	def save
-		File.open "post_save.yml", 'w' do |f|
+		
+		File.open  parameterize(@title) + ".yml", 'w' do |f|
             f.write YAML::dump self
         end
 	end
@@ -52,6 +53,22 @@ class Post
 
 	def load_file file
 		YAML.load_file(file)
+	end
+
+	# parametrize
+	def parameterize(string, sep = '-')
+	  # replace accented chars with their ascii equivalents
+	  parameterized_string = string.downcase
+	  # Turn unwanted chars into the separator
+	  parameterized_string.gsub!(/[^a-z0-9\-_]+/, sep)
+	  unless sep.nil? || sep.empty?
+	    re_sep = Regexp.escape(sep)
+	    # No more than one of the separator in a row.
+	    parameterized_string.gsub!(/#{re_sep}{2,}/, sep)
+	    # Remove leading/trailing separator.
+	    parameterized_string.gsub!(/^#{re_sep}|#{re_sep}$/, '')
+	  end
+	  parameterized_string.downcase
 	end
 
 end

@@ -12,6 +12,10 @@ class User
 		@posts.push(post)
 	end
 
+	def all_posts
+		@posts.reverse
+	end
+	
 	def list
 		array_post = []
 		@posts.each{|post| array_post << post.display_entry }
