@@ -18,6 +18,15 @@ class Post
 	  end
 	end
 
+	def sumary
+	end
+
+	def tagme
+	end
+
+	def same? tile,text,date
+		@title ==title && @text ==text && @date ==date
+	end
 
 	private 
 
