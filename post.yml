@@ -1,0 +1,6 @@
+--- !ruby/object:Post
+title: The best
+text: Im the best for long time
+date: '2014-06-05'
+user: !ruby/object:User
+  name: Luis
